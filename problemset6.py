@@ -40,4 +40,10 @@ with open ("python_06.fastq.txt", 'r') as fastq:
     print(f'(number of lines is {numLines} and number of characters is {numChar} . The number of Sequence IDs is {numSequenceID} and the number of nucleotides is {numNuc}. The average length of all the lines is {averageLen} while the average line length of lines that contain sequences is {averageLenSeq}')
 
 #question5 generate gene lists
- 
+with open ("ferret_pigmentation_genes.tsv", 'r') as pigment_genes, open ("ferret_all_genes.tsv", 'r') as all_genes, open('ferret_stemcellproliferation_genes.tsv', 'r') as stem_genes:
+    set_pigment=set(pigment_genes)
+    set_all=set(all_genes)
+    set_stem=set(stem_genes)
+    notCellProlif=set_all-set_stem
+    bothPigmentandProlif=set_pigment & set_stem
+     
