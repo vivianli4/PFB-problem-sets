@@ -1,5 +1,0 @@
-my_value=1
-if my_value
-	print("true")
-else 
-	print ("not true")
