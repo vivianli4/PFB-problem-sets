@@ -60,26 +60,44 @@ import re
 #     output=fasta_list
 
 #problem3 produce  codons in the first 3 reading frames
-with open ('Python_08_test.fasta.txt', 'r') as fasta, open ('Python_08.codons-3frames.nt', 'w') as output:
-    fasta_dict={}
+with open ('Python_08_test.fasta.txt', 'r') as fasta, open ('Python_08.codons-6frames.nt', 'w') as output:
+    fw_fasta_dict={}
+    rev_fasta_dict={}
+    reverseseq=''
     sequence=''
     for line in fasta:
         line=line.strip()
         if line.startswith('>'):
             gene_id=re.search(r'^>(\S+)', line).group(1)
-            fasta_dict[gene_id]=''
+            fw_fasta_dict[gene_id]=''
+            rev_fasta_dict[gene_id]=''
         else:
-            fasta_dict[gene_id]+=line
+            fw_fasta_dict[gene_id]+=line
+            rev_fasta_dict[gene_id]=fw_fasta_dict[gene_id][::-1].translate(str.maketrans('ATCG', 'TAGC'))
             #fasta_dict[gene_id]= [line[i:i+3] for i in range (1, len(line), 3)]
-    for gene in fasta_dict:
-        curr=fasta_dict[gene]
-        fasta_dict[gene]=[]
-        for nt in range (0, len(curr), 3):
-            codon=curr[nt:nt+3]
-            if len(codon)==3:
-                for i in range(0,int(len(curr)/3)):
-                 fasta_dict[gene][i]= fasta_dict[gene][i].append(codon) 
-                #currently it's itterating thru every nt not line 
-        #for 
-    print(fasta_dict)
+    codons_dict={}
+    for gene in fw_fasta_dict:
+        curr=fw_fasta_dict[gene]
+        for frame in range(0,3):
+            f=str(frame)
+            codons_dict[gene+'_frame'+f]=[]
+            for nt in range (frame, len(curr), 3):
+                codon=curr[nt:nt+3]
+                if len(codon)==3:
+                    codons_dict[gene+'_frame'+f].append(codon)
+    for gene in rev_fasta_dict:
+        curr=rev_fasta_dict[gene]
+        for frame in range(3,6):
+            f=str(frame)
+            codons_dict[gene+'_frame'+f]=[]
+            for nt in range (frame, len(curr), 3):
+                codon=curr[nt:nt+3]
+                if len(codon)==3:
+                    codons_dict[gene+'_frame'+f].append(codon) 
+        
+    for key,value in codons_dict.items():
+        string=f'{key}\n{value}\n'
+        output.write(string)
+
+#with open ('Python_08.codons-6frames.nt', 'r') as codontable, open ('Python_08.translated.aa', 'w') as proteintable
 
