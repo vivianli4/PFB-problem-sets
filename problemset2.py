@@ -8,7 +8,7 @@ print (f"the value you chose was {my_value}")
 # else:
 # 	print ("not true")
 
-if my_value >0:
+if my_value >=0:
 	print('positive')
 	isit_lt50= my_value <50
 	if my_value <50:

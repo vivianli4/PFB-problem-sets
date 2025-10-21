@@ -3,7 +3,7 @@
 import sys
 import re
 
-file_name=sys.argv[1]
+#file_name=sys.argv[1]
 #problem1 first attempt at question with TA
 # with open (file_name, 'r') as fasta:
 #     fasta_list={}
@@ -24,4 +24,62 @@ file_name=sys.argv[1]
 #             fasta_list[gene_id]['G']=countG
 #             fasta_list[gene_id]['T']=countT
 #             fasta_list[gene_id]['C']=countC
-#seccond attempt at problem 1 
+
+#second round, iterating through every nucleotide in each line isntead
+#if it's not already a key, then create one FIRST
+#then add 1 to it each other iteration of your for loop
+# file_name='Python_08.fasta.txt'
+# with open (file_name, 'r') as fasta:
+#     fasta_dict={}
+#     for line in fasta:
+#         line=line.strip()
+#         if line.startswith('>'):
+#             gene_id=re.search(r'^>(\S+)', line).group(1)
+#             fasta_dict[gene_id]={}
+#         else:
+#             for nt in line:
+#                 if nt not in fasta_dict[gene_id]:
+#                     print(f'{nt} not yet found in dict')
+#                     fasta_dict[gene_id][nt]=1
+#                 else:
+#                     fasta_dict[gene_id][nt]+=1
+                    
+    #print(fasta_dict)               
+#problem2 break every sequence into codons
+# with open ('Python_08_test.fasta.txt', 'r') as fasta open ('Python_08.codons-frame01.nt', 'w') as output:
+#     fasta_list={}
+#     for line in fasta:
+#         line=line.strip()
+#         if line.startswith('>'):
+#             gene_id=re.search(r'^>(\S+)', line).group(1)
+#             fasta_list[gene_id]=[]
+#         else:
+#             fasta_list[gene_id]= [line[i:i+3] for i in range (0, len(line), 3)]
+#             #if it's not a header, then i want to take the line and 
+#             #break it into lists of 3
+#     output=fasta_list
+
+#problem3 produce  codons in the first 3 reading frames
+with open ('Python_08_test.fasta.txt', 'r') as fasta, open ('Python_08.codons-3frames.nt', 'w') as output:
+    fasta_dict={}
+    sequence=''
+    for line in fasta:
+        line=line.strip()
+        if line.startswith('>'):
+            gene_id=re.search(r'^>(\S+)', line).group(1)
+            fasta_dict[gene_id]=''
+        else:
+            fasta_dict[gene_id]+=line
+            #fasta_dict[gene_id]= [line[i:i+3] for i in range (1, len(line), 3)]
+    for gene in fasta_dict:
+        curr=fasta_dict[gene]
+        fasta_dict[gene]=[]
+        for nt in range (0, len(curr), 3):
+            codon=curr[nt:nt+3]
+            if len(codon)==3:
+                for i in range(0,int(len(curr)/3)):
+                 fasta_dict[gene][i]= fasta_dict[gene][i].append(codon) 
+                #currently it's itterating thru every nt not line 
+        #for 
+    print(fasta_dict)
+

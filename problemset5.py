@@ -65,17 +65,17 @@ import sys
 # print(f'the GC content of this sequence is {GC_content:.2%}')
 
 #number 5 write FASTA parser script
-with open ('Python_06.fasta', 'r') as fasta_file:
-    fasta_dict={}
-    for line in fasta_file:
-        if '>' in line:
-            line=line.strip()
-            fasta_dict[line] =''
-        else:
-            for key in fasta_dict.keys():
-                line=line.strip()
-                fasta_dict[key]+=line
-    print(fasta_dict)
+# with open ('Python_06.fasta', 'r') as fasta_file:
+#     fasta_dict={}
+#     for line in fasta_file:
+#         if '>' in line:
+#             line=line.strip()
+#             fasta_dict[line] =''
+#         else:
+#             for key in fasta_dict.keys():
+#                 line=line.strip()
+#                 fasta_dict[key]+=line
+#     print(fasta_dict)
 
 #extra exercise
 # with open ('Python_06.seq.txt', 'r') as sequenceFile:
